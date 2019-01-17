@@ -261,7 +261,7 @@ func (this *summaryMetricsSource) decodeCPUStats(metrics *MetricSet, cpu *stats.
 }
 
 func (this *summaryMetricsSource) decodeEphemeralStorageStats(metrics *MetricSet, storage *stats.FsStats) {
-	if storage == nil {
+	if storage == nil || storage.UsedBytes == nil {
 		glog.V(9).Infof("missing storage usage metric!")
 		return
 	}
@@ -269,7 +269,7 @@ func (this *summaryMetricsSource) decodeEphemeralStorageStats(metrics *MetricSet
 }
 
 func (this *summaryMetricsSource) decodeEphemeralStorageStatsForContainer(metrics *MetricSet, rootfs *stats.FsStats, logs *stats.FsStats) {
-	if rootfs == nil || logs == nil {
+	if rootfs == nil || logs == nil || rootfs.UsedBytes == nil || logs.UsedBytes == nil {
 		glog.V(9).Infof("missing storage usage metric!")
 		return
 	}
